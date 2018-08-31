@@ -1,0 +1,14 @@
+{
+    "group": [
+        { "id": "developers" },
+        { "id": "admins"},
+        { "id": "approvers"},
+        { "id": "committers"}
+    ],
+    "member": [
+        {"id": "1", "groupId": "developers", "members": ["billy", "approvers", "committers"]},
+        {"id": "2", "groupId": "admins", "members": ["alex", "tristan"]},
+        {"id": "3", "groupId": "approvers", "members": ["admins"]},
+        {"id": "4", "groupId": "committers", "members": ["andrew"]}
+    ]
+}

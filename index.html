@@ -1,0 +1,75 @@
+<h1 id="apidocs">API docs</h1>
+
+<p>This API serves groups and their members.</p>
+
+<p>To access and modify resources, you can use any HTTP method
+GET POST PUT PATCH DELETE OPTIONS</p>
+
+<h2 id="resources">Resources</h2>
+
+<table>
+<colgroup>
+<col />
+<col />
+</colgroup>
+
+<thead>
+<tr>
+	<th> endpoint </th>
+	<th> notes </th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>/group </td>
+	<td> list all groups </td>
+</tr>
+<tr>
+	<td>/group/&lt;group_name&gt; </td>
+	<td> lookup specific group </td>
+</tr>
+<tr>
+	<td>/group/&lt;group_name&gt;/member </td>
+	<td> members of group named &#8220;group_name&#8221; </td>
+</tr>
+</tbody>
+</table>
+
+<p>e.g. to fetch members of a group named &#8220;admins&#8221;</p>
+
+<pre><code>$ curl localhost:8080/group/admins/member
+[
+  {
+    &quot;id&quot;: &quot;2&quot;,
+    &quot;groupId&quot;: &quot;admins&quot;,
+    &quot;members&quot;: [
+      &quot;alex&quot;,
+      &quot;tristan&quot;
+    ]
+  }
+]
+</code></pre>
+
+<h2 id="endpoint">Endpoint</h2>
+
+<p>http://localhost:8080</p>
+
+<h2 id="returncode">Return code</h2>
+
+<ul>
+<li>API returns HTTP 200, even when a resource is not found.</li>
+<li>Incase of non-existent resource, response is empty array i.e. <code>[]</code> or object with no properties i.e. <code>{}</code></li>
+</ul>
+
+<p>e.g.</p>
+
+<pre><code>$ curl localhost:8080/group/NON_EXISTENT_GROUP
+{}
+
+$ curl localhost:8080/group/NON_EXISTENT_GROUP/member
+[]
+
+$ curl localhost:8080/NON_EXISTENT_RESOURCE
+{}
+</code></pre>
