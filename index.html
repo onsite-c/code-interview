@@ -1,75 +1,41 @@
-<h1 id="apidocs">API docs</h1>
-
-<p>This API serves groups and their members.</p>
-
-<p>To access and modify resources, you can use any HTTP method
-GET POST PUT PATCH DELETE OPTIONS</p>
-
+<h1 id="api-docs">API docs</h1>
+<p>This API serves groups and their members. Groups may be nested.</p>
 <h2 id="resources">Resources</h2>
-
 <table>
-<colgroup>
-<col />
-<col />
-</colgroup>
-
 <thead>
-<tr>
-	<th> endpoint </th>
-	<th> notes </th>
+<tr class="header">
+<th>endpoint</th>
+<th>description</th>
 </tr>
 </thead>
-
 <tbody>
-<tr>
-	<td>/group </td>
-	<td> list all groups </td>
+<tr class="odd">
+<td>/groups</td>
+<td>list all groups</td>
 </tr>
-<tr>
-	<td>/group/&lt;group_name&gt; </td>
-	<td> lookup specific group </td>
+<tr class="even">
+<td>/groups/<group_name></td>
+<td>get a specific group</td>
 </tr>
-<tr>
-	<td>/group/&lt;group_name&gt;/member </td>
-	<td> members of group named &#8220;group_name&#8221; </td>
+<tr class="odd">
+<td>/groups/<group_name>/members</td>
+<td>get the members of a group</td>
 </tr>
 </tbody>
 </table>
-
-<p>e.g. to fetch members of a group named &#8220;admins&#8221;</p>
-
-<pre><code>$ curl localhost:8080/group/admins/member
+<p>e.g. to fetch members of a group named &quot;admins&quot;</p>
+<pre><code>$ curl -H &quot;Authorization: Bearer $token&quot; localhost:5000/groups/admins/members
 [
   {
-    &quot;id&quot;: &quot;2&quot;,
-    &quot;groupId&quot;: &quot;admins&quot;,
-    &quot;members&quot;: [
-      &quot;alex&quot;,
-      &quot;tristan&quot;
-    ]
+    &quot;name&quot;: &quot;alex&quot;
+  },
+  {
+    &quot;name&quot;: &quot;tristan&quot;
   }
-]
-</code></pre>
-
+]</code></pre>
+<p>Endpoints return 200 codes on success. When requesting information about a group that does not exist, a 404 code is returned.</p>
 <h2 id="endpoint">Endpoint</h2>
-
-<p>http://localhost:8080</p>
-
-<h2 id="returncode">Return code</h2>
-
-<ul>
-<li>API returns HTTP 200, even when a resource is not found.</li>
-<li>Incase of non-existent resource, response is empty array i.e. <code>[]</code> or object with no properties i.e. <code>{}</code></li>
-</ul>
-
-<p>e.g.</p>
-
-<pre><code>$ curl localhost:8080/group/NON_EXISTENT_GROUP
-{}
-
-$ curl localhost:8080/group/NON_EXISTENT_GROUP/member
-[]
-
-$ curl localhost:8080/NON_EXISTENT_RESOURCE
-{}
-</code></pre>
+<p>http://localhost:5000</p>
+<h2 id="authentication">Authentication</h2>
+<p>Endpoints require authentication. Provide the <code>Authorization</code> header with the bearer token printed at server startup. For example:</p>
+<pre><code>$ curl -H &quot;Authorization: Bearer a6njk09m7fr61bp3tcoidsbj&quot; localhost:5000/groups</code></pre>
