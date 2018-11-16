@@ -1,0 +1,7 @@
+{
+  "name": "code-interview",
+  "version": "1.0.0",
+  "description": "Code interview in JavaScript",
+  "main": "cli.js",
+  "license": "UNLICENSED"
+}
