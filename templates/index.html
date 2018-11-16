@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Groups Server</title>
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      td {
+        padding: 0.5rem;
+      }
+
+      th {
+        padding: 0.5rem;
+        border-bottom: 1px solid black;
+        text-align: left;
+      }
+
+      code, pre {
+        background-color: #eeeeee;
+        padding: 0.25rem;
+      }
+      pre code {
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Groups Server</h1>
+      <p>This service returns information about  groups and their members. Groups may be nested.</p>
+
+      <h2 id="resources">Resources</h2>
+      <table>
+        <thead>
+          <tr class="header">
+            <th>endpoint</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/groups</code></td>
+            <td>list all groups</td>
+          </tr>
+          <tr>
+            <td><code>/groups/&lt;name&gt;</code></td>
+            <td>get a specific group</td>
+          </tr>
+          <tr>
+            <td><code>/groups/&lt;name&gt;/members</code></td>
+            <td>get the members of a group</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>e.g. to fetch members of a group named "admins"</p>
+      <pre><code>$ curl -H "Authorization: Bearer {{ token }}" localhost:5000/groups/admins/members
+[
+  {
+    "name": "alex"
+  },
+  {
+    "name": "tristan"
+  }
+]</code></pre>
+
+      <p>Endpoints return 200 codes on success. When requesting information about a group that does not exist, a 404 code is returned.</p>
+
+      <h2 id="endpoint">Endpoint</h2>
+      <p>http://localhost:5000</p>
+
+      <h2 id="authentication">Authentication</h2>
+      <p>Endpoints require authentication. Provide the <code>Authorization</code> header with the bearer token printed at server startup. For example:</p>
+      <pre><code>$ curl -H "Authorization: Bearer {{ token }}" localhost:5000/groups</code></pre>
+    </div>
+  </body>
+</html>

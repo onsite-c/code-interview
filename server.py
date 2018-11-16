@@ -4,7 +4,7 @@ import string
 import random
 
 from functools import wraps
-from flask import Flask, jsonify, abort, send_file, request, Response
+from flask import Flask, jsonify, abort, render_template, request, Response
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -34,7 +34,7 @@ def requires_auth(f):
 
 @app.route('/', methods=['GET'])
 def index():
-    return send_file('index.html')
+    return render_template('index.html', token=token)
 
 @app.route('/groups', methods=['GET'])
 @requires_auth
