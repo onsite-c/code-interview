@@ -3,3 +3,11 @@
 
 # Ignore Gradle build output directory
 build
+
+# Ignore IDE specific files for Eclipse and IDEA
+.project
+.classpath
+.settings
+*.iml
+*.ipr
+*.iws
