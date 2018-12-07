@@ -2,6 +2,7 @@
 
 import string
 import random
+import json
 
 from functools import wraps
 from flask import Flask, jsonify, abort, render_template, request, Response
@@ -34,7 +35,11 @@ def requires_auth(f):
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', token=token)
+    return render_template(
+        'index.html',
+        token=token,
+        data=json.dumps(data, indent=2, sort_keys=True)
+    )
 
 @app.route('/groups', methods=['GET'])
 @requires_auth
@@ -47,7 +52,7 @@ def get_group(group):
     if group in data:
         return jsonify({"name": group})
     else:
-        res = jsonify({'error': "group '{}' does not exist"}).format(group)
+        res = jsonify({'error': f"group '{group}' does not exist"})
         res.status_code = 404
         return res
 
@@ -58,7 +63,7 @@ def get_members(group):
     if members:
         return jsonify([{"name": m} for m in members])
     else:
-        res = jsonify({'error': "group '{}' does not exist"}).format(group)
+        res = jsonify({'error': f"group '{group}' does not exist"})
         res.status_code = 404
         return res
 

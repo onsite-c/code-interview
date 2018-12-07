@@ -52,15 +52,15 @@
         </thead>
         <tbody>
           <tr>
-            <td><code>/groups</code></td>
+            <td><code>GET /groups</code></td>
             <td>list all groups</td>
           </tr>
           <tr>
-            <td><code>/groups/&lt;name&gt;</code></td>
+            <td><code>GET /groups/&lt;name&gt;</code></td>
             <td>get a specific group</td>
           </tr>
           <tr>
-            <td><code>/groups/&lt;name&gt;/members</code></td>
+            <td><code>GET /groups/&lt;name&gt;/members</code></td>
             <td>get the members of a group</td>
           </tr>
         </tbody>
@@ -85,6 +85,10 @@
       <h2 id="authentication">Authentication</h2>
       <p>Endpoints require authentication. Provide the <code>Authorization</code> header with the bearer token printed at server startup. For example:</p>
       <pre><code>$ curl -H "Authorization: Bearer {{ token }}" localhost:5000/groups</code></pre>
+
+      <h2 id="data">Sample Data</h2>
+      <p>The example server contains the following groups:</p>
+      <pre><code>{{ data }}</code></pre>
     </div>
   </body>
 </html>
