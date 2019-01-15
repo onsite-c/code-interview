@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set -eux
 
 setup_python() {
     pushd src/python
