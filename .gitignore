@@ -1,2 +1,6 @@
 *.pyc
 venv/
+
+# generic editor files
+*.swp
+.vscode/*
