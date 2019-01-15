@@ -15,7 +15,8 @@ data = {
     'developers': ['billy', 'approvers', 'comitters'],
     'admins': ['alex', 'tristan'],
     'approvers': ['admins'],
-    'comitters': ['andrew'],
+    'comitters': ['andrew', 'ron', 'henry'],
+    'users': ['ron', 'henry', 'james'],
 }
 
 def check_authorization(auth):
