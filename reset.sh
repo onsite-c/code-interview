@@ -40,6 +40,7 @@ EOF
 }
 
 # remove any user modifications
+git reset --hard origin/master
 git clean -fdx
 
 # setup language skeletons
