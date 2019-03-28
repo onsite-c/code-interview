@@ -21,24 +21,6 @@ setup_java() {
     popd
 }
 
-setup_go() {
-    local project=${GOPATH:-~/go}/src/code-interview
-    rm -rf ${project}
-    mkdir -p ${project}
-
-    cat > ${project}/cli.go <<EOF
-package main
-
-import (
-	"fmt"
-)
-
-func main() {
-	fmt.Println("Hello, world!")
-}
-EOF
-}
-
 # remove any user modifications
 git reset --hard origin/master
 git clean -fdx
@@ -46,4 +28,3 @@ git clean -fdx
 # setup language skeletons
 setup_python
 setup_java
-setup_go
