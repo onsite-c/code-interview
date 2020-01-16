@@ -39,7 +39,7 @@ def index():
     return render_template(
         'index.html',
         token=token,
-        data=json.dumps(data, indent=2, sort_keys=True)
+        data=data,
     )
 
 @app.route('/groups', methods=['GET'])
