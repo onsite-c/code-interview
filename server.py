@@ -6,17 +6,43 @@ import json
 
 from functools import wraps
 from flask import Flask, jsonify, abort, render_template, request, Response
+from werkzeug.exceptions import HTTPException
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 token = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(24))
 data = {
-    'developers': ['billy', 'approvers', 'comitters'],
-    'admins': ['alex', 'tristan'],
-    'approvers': ['admins'],
-    'comitters': ['andrew', 'ron', 'henry'],
-    'users': ['ron', 'henry', 'james'],
+    'developers': {
+        'description': 'Project developers',
+        'created_at': '2020-01-21T03:45:20',
+        'members': ['billy', 'approvers', 'comitters', 'noelle'],
+    },
+    'admins': {
+        'description': 'Administrators',
+        'created_at': '2018-05-07T12:01:32',
+        'members': ['alex', 'tristan', 'dj', 'julie']
+    },
+    'approvers': {
+        'description': 'Code reviewers',
+        'created_at': '2020-01-21T03:40:02',
+        'members': ['admins']
+    },
+    'comitters': {
+        'description': 'Project developers',
+        'created_at': '2019-12-13T18:15:47',
+        'members': ['andrew', 'ron', 'henry', 'janet']
+    },
+    'users': {
+        'description': 'Other users',
+        'created_at': '2019-10-31T14:50:55',
+        'members': ['ashleigh', 'ron', 'james', 'henry']
+    },
+    'interest': {
+        'description': 'People interested in project updates',
+        'created_at': '2019-10-31T14:50:55',
+        'members': ['ashleigh', 'alex', 'elliot', 'kori', 'maggie', 'users']
+    },
 }
 
 def check_authorization(auth):
@@ -28,9 +54,7 @@ def requires_auth(f):
     def decorated(*args, **kwargs):
         auth = request.headers.get('Authorization')
         if not auth or not check_authorization(auth):
-            res = jsonify({'error': 'authentication required'})
-            res.status_code = 401
-            return res
+            abort(401)
         return f(*args, **kwargs)
     return decorated
 
@@ -50,24 +74,31 @@ def get_groups():
 @app.route('/groups/<group>', methods=['GET'])
 @requires_auth
 def get_group(group):
-    if group in data:
-        return jsonify({"name": group})
-    else:
-        res = jsonify({'error': f"group '{group}' does not exist"})
-        res.status_code = 404
-        return res
+    group_data = data.get(group)
+    if not group_data:
+        abort(404, description=f"group '{group}' does not exist")
+
+    return jsonify({
+        'name': group,
+        'description': group_data['description'],
+        'created_at': group_data['created_at'],
+    })
 
 @app.route('/groups/<group>/members', methods=['GET'])
 @requires_auth
 def get_members(group):
-    members = data.get(group)
-    if members:
-        return jsonify([{"name": m} for m in members])
-    else:
-        res = jsonify({'error': f"group '{group}' does not exist"})
-        res.status_code = 404
-        return res
+    group_data = data.get(group)
+    if not group_data:
+        abort(404, description=f"group '{group}' does not exist")
 
+    return jsonify([{"name": m} for m in group_data['members']])
+
+@app.errorhandler(Exception)
+def error(e):
+    code = 500
+    if isinstance(e, HTTPException):
+        code = e.code
+    return jsonify(error=str(e)), code
 
 if __name__ == '__main__':
     print()
