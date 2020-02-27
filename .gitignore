@@ -4,3 +4,6 @@ venv/
 # generic editor files
 *.swp
 .vscode/*
+
+# rbenv
+.ruby-version
